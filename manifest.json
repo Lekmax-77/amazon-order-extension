@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Amazon Address & Order Tools",
+  "version": "1.0.0",
+  "description": "Ajoute un bouton pour copier l'adresse du client Amazon, et affiche les produits commandés avec leurs quantités.",
+  "permissions": ["scripting", "activeTab", "clipboardWrite"],
+  "icons": {
+    "48": "icon.png"
+  },
+  "action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://sellercentral.amazon.fr/*",
+        "https://sellercentral.amazon.com/*"
+      ],
+      "js": ["content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*.svg"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
