@@ -1,5 +1,5 @@
 function cleanAddressBlock(container) {
-  const lines = Array.from(container.querySelectorAll('span'))
+  const rawLines = Array.from(container.querySelectorAll('span'))
     .map(el => el.textContent.trim())
     .filter(line =>
       line.length > 0 &&
@@ -7,8 +7,23 @@ function cleanAddressBlock(container) {
       line !== ','
     );
 
+  const lines = [];
+  for (let i = 0; i < rawLines.length; i++) {
+    const current = rawLines[i];
+    const next = rawLines[i + 1];
+
+    // Si ligne actuelle est un code postal (5 chiffres) et suivante existe, fusionne
+    if (/^\d{5}$/.test(current) && next) {
+      lines.push(`${current} ${next}`);
+      i++; // skip la ville déjà ajoutée
+    } else {
+      lines.push(current);
+    }
+  }
+
   return lines.join('\n');
 }
+
 
 
 function getPhoneNumber() {
